@@ -3,45 +3,45 @@ document.addEventListener('DOMContentLoaded', () => {
     const quoteCategory = document.getElementById('newQuoteCategory');
     const addBtn = document.getElementById('addQuote');
     const quoteDisplay = document.getElementById('quoteDisplay');
+    const displayRandomQuote = document.getElementById('newQuote');
 
+    let quotesArray = [
+        { text: "The greatest glory in living lies not in never falling, but in rising every time we fall.", category: "Inspirational" },
+        { text: "Life is what happens when you're busy making other plans.", category: "Life" },
+        { text: "The purpose of our lives is to be happy.", category: "Happiness" }
+    ];
 
-    let quoteArray = [];
-    let quoteObject = {};
+    const showRandomQuote = function(){
+        const randomIndex = Math.floor(Math.random() * quotesArray.length);
+        const randomQuote = quotesArray[randomIndex];
+
+        quoteDisplay.textContent = `${randomQuote.text} - Category: ${randomQuote.category}`
+    };
 
    const addQuote = function(){
 
     if(quoteText.value === '' || quoteCategory.value === '' ){
         alert("Enter quote and quote category!");
     }else {
-       displayRandomQuote();
+       displayQuote();
         
     }
     
    };
 
-   const displayRandomQuote = function(){
+   const displayQuote = function(){
     const quoteTextValue = quoteText.value.trim();
     const quoteCategoryValue = quoteCategory.value.trim();
 
-    quoteObject[quoteTextValue] = quoteCategoryValue;
-    console.log(quoteObject);
+    const newQuote = {text: quoteTextValue, category: quoteCategoryValue};
+    quotesArray.push(newQuote);
 
-    const quoteList = document.createElement('li');
-    quoteList.classList.add('quotes');
-
-    const categoryList = document.createElement('h4');
-    categoryList.classList.add('quote-category');
-
-    quoteList.textContent = quoteTextValue;
-    categoryList.textContent = quoteCategoryValue;
-
-    quoteList.appendChild(categoryList);
-    quoteDisplay.appendChild(quoteList);
-
+    console.log(quotesArray);
     quoteText.value = '';
     quoteCategory.value = '';
    };
 
    addBtn.addEventListener('click',addQuote);
+   displayRandomQuote.addEventListener('click', showRandomQuote);
 
 });
