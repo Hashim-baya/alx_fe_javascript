@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
         quoteDisplay.innerHTML = `<p>${randomQuote.text} - Category: ${randomQuote.category}</p>`
     };
 
-   const addQuote = function(){
+   const createAddQuoteForm = function(){
 
     if(quoteText.value === '' || quoteCategory.value === '' ){
         alert("Enter quote and quote category!");
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
     quoteCategory.value = '';
    };
 
-   addBtn.addEventListener('click',addQuote);
+   addBtn.addEventListener('click',createAddQuoteForm);
    displayRandomQuote.addEventListener('click', showRandomQuote);
 
 });
