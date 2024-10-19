@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const randomIndex = Math.floor(Math.random() * quotesArray.length);
         const randomQuote = quotesArray[randomIndex];
 
-        quoteDisplay.textContent = `${randomQuote.text} - Category: ${randomQuote.category}`
+        quoteDisplay.innerHTML = `<p>${randomQuote.text} - Category: ${randomQuote.category}</p>`
     };
 
    const addQuote = function(){
