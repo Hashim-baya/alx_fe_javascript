@@ -13,13 +13,13 @@ document.addEventListener('DOMContentLoaded', () => {
     if(quoteText.value === '' || quoteCategory.value === '' ){
         alert("Enter quote and quote category!");
     }else {
-       showRandomQuote();
+       displayRandomQuote();
         
     }
     
    };
 
-   const showRandomQuote = function(){
+   const displayRandomQuote = function(){
     const quoteTextValue = quoteText.value.trim();
     const quoteCategoryValue = quoteCategory.value.trim();
 
