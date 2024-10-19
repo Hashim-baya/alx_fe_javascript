@@ -32,9 +32,16 @@ document.addEventListener('DOMContentLoaded', () => {
    const displayQuote = function(){
     const quoteTextValue = quoteText.value.trim();
     const quoteCategoryValue = quoteCategory.value.trim();
+    const quoteDisplay = document.getElementById('quoteDisplay');
+
+    const quoteList = document.createElement('p');
+    quoteList.classList.add('quotes');
 
     const newQuote = {text: quoteTextValue, category: quoteCategoryValue};
     quotesArray.push(newQuote);
+
+    quoteList.innerHTML = `<p>${quoteTextValue} - ${quoteCategoryValue}</p>`
+    quoteDisplay.appendChild(quoteList);
 
     console.log(quotesArray);
     quoteText.value = '';
@@ -43,5 +50,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
    addBtn.addEventListener('click',createAddQuoteForm);
    displayRandomQuote.addEventListener('click', showRandomQuote);
+   quoteCategory.addEventListener('keypress', (event) => {
+    if(event.key === 'Enter'){
+        createAddQuoteForm();
+    }
+   });
 
 });
