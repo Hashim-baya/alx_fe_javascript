@@ -28,6 +28,31 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    const postQuoteToServer = async (quote) => {
+        try {
+            const response = await fetch(SERVER_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json' // Define the content type as JSON
+                },
+                body: JSON.stringify({
+                    title: quote.text, // Sending as "title" (server expects a "title")
+                    body: quote.text,  // Using the quote as the body text for simplicity
+                    userId: 1          // Some mock API requires a userId, so we're adding it
+                })
+            });
+
+            if (response.ok) {
+                const newQuote = await response.json();
+                console.log("Quote successfully posted:", newQuote);
+            } else {
+                console.error('Error posting quote:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Network error:', error);
+        }
+    };
+
     const syncWithServer = (serverQuotes) => {
         let localQuotes = JSON.parse(localStorage.getItem('Quotes')) || [];
         let conflict = false;
@@ -87,6 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
        displayQuote();
         displayAllQuotes();
         populateCategories();
+        postQuoteToServer()
     }
     
    };
