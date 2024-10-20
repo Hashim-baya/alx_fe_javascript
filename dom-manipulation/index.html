@@ -17,7 +17,10 @@
       </div>
       <div id="quote-list">
         <h3>All Quotes:</h3>
-        <input id="filterCategory" type="text" placeholder="Filter by category" oninput="filterQuotes()" />
+        <select id="categoryFilter">
+            <option value="all">All Categories</option>
+            <!-- Dynamically populated categories -->
+          </select>
         <ul id="quotes-container"></ul>
     </div>
     <div>
