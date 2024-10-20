@@ -9,11 +9,21 @@
     <h1>Dynamic Quote Generator</h1>
     <div id="quoteDisplay"></div>
     <button id="newQuote">Show New Quote</button>
+
     <div>
         <input id="newQuoteText" type="text" placeholder="Enter a new quote" />
         <input id="newQuoteCategory" type="text" placeholder="Enter quote category" />
         <button id="addQuote">Add Quote</button>
       </div>
+      <div id="quote-list">
+        <h3>All Quotes:</h3>
+        <input id="filterCategory" type="text" placeholder="Filter by category" oninput="filterQuotes()" />
+        <ul id="quotes-container"></ul>
+    </div>
+    <div>
+        <button id="exportButton">Export Quotes</button>
+        <input type="file" id="importFile" accept=".json"  />
+    </div>
     
     
     <script src="script.js"></script>
