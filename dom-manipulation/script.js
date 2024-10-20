@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const exportButton = document.getElementById('exportButton');
     const importFiles = document.getElementById('importFile');
     const categoryFilter = document.getElementById('categoryFilter');
-
+    const syncStatus = document.getElementById('syncStatus');
     // Array of quote objects with text and category
     let quotesArray = JSON.parse(localStorage.getItem('Quotes')) || [
         { text: "The greatest glory in living lies not in never falling, but in rising every time we fall.", category: "Inspirational" },
@@ -44,6 +44,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (response.ok) {
                 const newQuote = await response.json();
+
+                syncStatus.textContent = "Quotes synced with server!";
+                
+                setTimeout(() => {
+                    syncStatus.textContent = '';
+                }, 3000);
+
                 console.log("Quote successfully posted:", newQuote);
             } else {
                 console.error('Error posting quote:', response.statusText);
