@@ -15,6 +15,47 @@ document.addEventListener('DOMContentLoaded', () => {
         { text: "The purpose of our lives is to be happy.", category: "Happiness" }
     ];
 
+    const serverUrl = 'https://jsonplaceholder.typicode.com/posts';
+
+    const fetchQuotesFromServer = async () => {
+        try{
+            const response = await fetch(serverUrl);
+            const data = await response.json();
+            const serverQuotes = data.map(item => ({text: item.body, category: "General" }));
+            syncWithServer(serverQuotes);
+        }catch(error) {
+            console.error("Error fetching data from server:",error);
+        }
+    };
+
+    const syncWithServer = (serverQuotes) => {
+        let localQuotes = JSON.parse(localStorage.getItem('Quotes')) || [];
+        let conflict = false;
+
+        const mergedQuotes = serverQuotes.map(serverQuote => {
+            const localQuote = localQuotes.find(localQuote => {
+                return localQuote.text === serverQuote.text;
+            });
+            if(localQuote){
+                conflict = true;
+                const userChoice = confirm(`Conflict detected for quote: "${serverQuote.text}". OK to keep server version, Cancel to keep local.`);
+                return userChoice ? serverQuote : localQuote;
+            }
+
+            return serverQuote;
+        });
+
+        const uniqueLocalQuotes = localQuotes.filter(localQuote => !serverQuotes.some(serverQuote => serverQuote.text === localQuote.text ));
+        mergedQuotes.push(...uniqueLocalQuotes);
+
+        localStorage.setItem('Quotes', JSON.stringify(mergedQuotes));
+        displayAllQuotes();
+
+        if(conflict){
+            alert("Conflicts were resolved based on your inputs.")
+        }
+    };
+
     window.onload = function(){
         displayAllQuotes();
         populateCategories();
@@ -140,7 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let filteredQuotes;
         if(selectedCategory === 'all'){
-            filterQuotes = quotesArray;
+            filteredQuotes = quotesArray;
         }else {
             filteredQuotes = quotesArray.filter(quote => {
                 return quote.category === selectedCategory
@@ -167,5 +208,8 @@ document.addEventListener('DOMContentLoaded', () => {
    exportButton.addEventListener('click', exportQuotesToJson);
    importFiles.addEventListener('change', importFromJsonFile);
    categoryFilter.addEventListener('change', filterQuotes);
+
+   fetchQuotesFromServer();
+   setInterval(fetchQuotesFromServer, 30000);
 
 });
