@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const response = await fetch(serverUrl);
             const data = await response.json();
             const serverQuotes = data.map(item => ({text: item.body, category: "General" }));
-            syncWithServer(serverQuotes);
+            syncQuotes(serverQuotes);
         }catch(error) {
             console.error("Error fetching data from server:",error);
         }
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    const syncWithServer = (serverQuotes) => {
+    const syncQuotes = (serverQuotes) => {
         let localQuotes = JSON.parse(localStorage.getItem('Quotes')) || [];
         let conflict = false;
 
